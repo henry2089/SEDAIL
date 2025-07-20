@@ -2,7 +2,7 @@
 
 # Requirements
 
-SEDAIL is evaluated  on MuJoCo continuous control tasks in OpenAI gym. 
+SEDAIL is evaluated  on MuJoCo continuous control tasks in OpenAI gym. It can be set up by following the official installation instructions at https://github.com/openai/mujoco-py.
 
 To install the required packages, run the following command:
 
