@@ -3,6 +3,7 @@
 # Requirements
 
 SEDAIL is evaluated  on MuJoCo continuous control tasks in OpenAI gym. 
+
 To install the required packages, run the following command:
 
 ```
