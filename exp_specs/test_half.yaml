@@ -1,0 +1,144 @@
+meta_data:
+  script_path: run_scripts/UTD_adv_irl_exp_script.py
+  exp_name: test_halfcheetah
+  description: Train an adversarial IRL model
+  num_workers: 15 # 64
+  using_gpus: true
+# -----------------------------------------------------------------------------
+variables:
+  adv_irl_params:
+    grad_pen_weight: [ 0.1 ]  # [0.1,0.01,0.001]
+    disc_lr: [ 0.00001 ]
+    use_grad_pen: [ true ]
+  sac_params:
+    reward_scale: [ 2.0 ]
+  seed: [ 1 ]
+  data_num: [ 1000 ]
+  disc_ddpm_n_timesteps: [ 10 ] # 2,5,10,20
+  disc_ddpm_beta_schedule: [ "linear" ] # ,"cosine","vp"  "c"
+  traj_num: [ 1 ] # [1,4,16]
+  state_only: [ false ] # true,false
+
+  #注意
+  drop_rate: [ 0.2 ]  #0.2, 0.5
+  emb_type: [ 'Embedding' ]  #'Sequential', 'Embedding', 'weight'
+  clip_num: [ 0.3 ]  
+  x_dim_mult: [ 1 ]  #1 ,2
+  x_emb_type: [ 'none' ]  #'single', 'multi', 'none','nemb'
+  num_mid_layers: [ 3 ]  #1, 2, 3
+  x_emb_dim: [ 128 ]
+  n_dim: [ 16 ]  #16, 32
+  sample_length: [ 300 ]
+  demo_type: [ 'normal' ] #'sample', 'normal'
+  clas_type: [ 'class' ]  #'class', 'extent'
+  disc_hid_dim: [ 128 ]  #128, 256, 192
+  t_dim: [ 16 ]  #16, 32
+  t_dim_mult: [ 2 ]  #2, 4, 6
+  is_diff_adapt: [ false ]  #true,false
+  update_type: [ 'all' ]  #disc, all
+  is_clip: [ false ]  # true, false
+  is_reward_smooth: [ false ]  # true, false
+  reward_smooth_gamma: [ 0.95 ]  # 0.9
+  trainer_version: [ 'dual' ]  #'new' 'old' 'dual'
+  train_type: [ "same" ]  #"delay" "same"
+  train_divisor: [ 10 ]  #5, 10, 20
+  lambda_factor: [ 2000.0 ]
+  t_stopgrad: [ 2 ]
+  extend_type: [ 'sq' ]
+  UTD: [ 9 ]
+  onpolicy_buffer_size: [ 3000 ]
+  num_weight_per_train_call: [ 1000 ]
+  num_classifier_per_train_call: [ 5000 ]
+  disc_divisor: [ 1 ]
+  stop_utd_return_num: [ 10000 ] # traj_1 4100 16 4600
+  # ada_params
+  ada_divisor: [ 300 ]
+  ada_interval: [ 10 ]
+  ada_target: [ 0.1 ]
+  # redq_params
+  trainer_type: [ 'REDQ' ]
+  num_Q: [ 10 ]
+  num_min: [ 2 ]
+  lr: [ 0.0003 ]
+  # chain_params
+  beta_schedule: [ "linear" ]
+  t_min: [ 2 ]
+  t_max: [ 100 ]
+  ts_dist: [ 'priority' ]
+  cond_dim: [ 16 ]
+  condition_mlp: [ true ]
+  ischain: [ true ]
+  # eval_param
+  is_classifier_reward: [ true ]
+  eval_calc_batch_size: [ 256 ]
+  num_eval_iterations: [ 5 ]
+
+# -----------------------------------------------------------------------------
+constants:
+  expert_name: 'halfcheetah_sac'
+  expert_idx: 0
+  traj_num: 4
+  scale_env_with_demo_stats: false
+  minmax_env_with_demo_stats: false
+  disc_clamp_magnitude: 10.0
+  disc_ddpm_n_timesteps: 10
+  disc_ddpm_beta_schedule: "linear" # ["linear","cosine","vp"]
+  disc_ddpm_train: true
+  disc_hid_dim: 128
+
+  policy_net_size: 256
+  policy_num_hidden_layers: 2
+
+  adv_irl_params:
+    mode: 'ddpm'
+    state_only: false
+
+    num_epochs: 20
+    num_steps_per_epoch: 10000
+    num_steps_between_train_calls: 1000
+    max_path_length: 1000
+    min_steps_before_training: 5000
+
+    eval_deterministic: true
+    num_steps_per_eval: 10000
+    
+    replay_buffer_size: 1000000  # origin 20000
+    no_terminal: true
+    eval_no_terminal: false
+    wrap_absorbing: false
+
+    num_update_loops_per_train_call: 1000
+    num_disc_updates_per_loop_iter: 1
+    num_policy_updates_per_loop_iter: 1
+
+    disc_lr: 0.0003
+    disc_momentum: 0.9
+    use_grad_pen: False
+    # grad_pen_weight: 10.0
+    disc_optim_batch_size: 256
+    policy_optim_batch_size: 256
+    policy_optim_batch_size_from_expert: 0
+
+    save_best: true
+    save_epoch: false
+    freq_saving: 20
+    save_replay_buffer: false
+    # save_environment: false
+
+  sac_params:
+    # reward_scale: 8.0
+    discount: 0.99
+    soft_target_tau: 0.005
+    beta_1: 0.25
+    policy_lr: 0.0003
+    qf_lr: 0.0003
+    vf_lr: 0.0003
+    policy_mean_reg_weight: 0.001
+    policy_std_reg_weight: 0.001
+    # target_entropy: -3.0
+
+  env_specs:
+    env_name: 'halfcheetah'
+    env_kwargs: { }
+    env_num: 1
+    disc_ddpm: True
