@@ -1,4 +1,4 @@
-# SEDAIL:Sample Efficient Diffusion Adversarial Imitation Learning
+# SEDAIL:Sample-Efficient Diffusion Adversarial Imitation Learning
 
 # Requirements
 
