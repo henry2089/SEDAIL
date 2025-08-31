@@ -20,4 +20,7 @@ Example scripts:
 
 ```
 python ./run_experiment.py -e "./exp_specs/test_ant.yaml" -g 0
+python ./run_experiment.py -e "./exp_specs/test_half.yaml" -g 0
+python ./run_experiment.py -e "./exp_specs/test_hopper.yaml" -g 0
+python ./run_experiment.py -e "./exp_specs/test_walker.yaml" -g 0
 ```
