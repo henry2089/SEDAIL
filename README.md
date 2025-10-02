@@ -1,4 +1,6 @@
 # SEDAIL:Sample-Efficient Diffusion Adversarial Imitation Learning
+![framework](https://github.com/user-attachments/assets/c209ba66-cd89-451d-829b-63644e2e503a)
+_(a) The discriminator \(D_{(\phi,\psi)}\) is a classifier guided conditional diffusion model. Each sample first passes through the diffusion chain; the diffusion model \(\phi\) then computes a loss that trains the discriminator to tell apart expert data \(x_{0}\sim\mathcal{D}\) and agent data \(x_{0}\sim\mathcal{R}_{\text{off}}\). (b) The policy \(\pi_{\theta}\) is updated by maximizing the diffusion reward \(R_{(\phi,\psi)}\) produced by \(D_{(\phi,\psi)}\)._
 
 # Requirements
 
